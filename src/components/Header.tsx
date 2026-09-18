@@ -35,7 +35,7 @@ export function Header() {
               mira
             </span>
             <span className="ml-1 hidden rounded-full border border-ink/10 bg-white/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/55 backdrop-blur-sm sm:inline-flex">
-              v0.2.0
+              v0.3.0
             </span>
           </a>
 
