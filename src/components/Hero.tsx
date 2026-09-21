@@ -18,7 +18,7 @@ export function Hero() {
           {/* Status pill — capsule */}
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/60 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink/60 backdrop-blur-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-coral" />
-            v0.3.6 — alpha, in the open
+            v0.3.8 — alpha, in the open
           </div>
 
           {/* Headline */}
