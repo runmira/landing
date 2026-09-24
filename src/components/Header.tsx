@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const NAV_ITEMS = [
   { label: 'Manifesto', href: '#manifesto' },
@@ -51,6 +52,13 @@ export function Header() {
                 <span className="absolute -bottom-1 left-0 h-px w-0 bg-coral transition-all duration-200 group-hover:w-full" />
               </a>
             ))}
+            <Link
+              href="/docs"
+              className="group relative text-[13px] font-medium text-ink/60 transition-colors hover:text-ink"
+            >
+              Docs
+              <span className="absolute -bottom-1 left-0 h-px w-0 bg-coral transition-all duration-200 group-hover:w-full" />
+            </Link>
           </nav>
 
           {/* Right cluster — same obsidian capsule vocabulary as InstallCommand */}
