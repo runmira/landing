@@ -19,7 +19,7 @@ export function Footer() {
               GitHub
             </a>
             <a
-              href="https://github.com/runmira/mira/releases"
+              href="/releases"
               className="text-ink/60 transition-colors hover:text-ink"
             >
               Releases
@@ -31,7 +31,7 @@ export function Footer() {
               Issues
             </a>
             <a
-              href="https://github.com/runmira/mira/blob/main/README.md"
+              href="/docs"
               className="text-ink/60 transition-colors hover:text-ink"
             >
               Docs

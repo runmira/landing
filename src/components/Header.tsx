@@ -1,11 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+
 const NAV_ITEMS = [
   { label: 'Manifesto', href: '#manifesto' },
   { label: 'Terminal', href: '#terminal' },
   { label: 'Providers', href: '#providers' },
   { label: 'Install', href: '#install' },
+  { label: 'Releases', href: '/releases', external: false },
 ];
 
 export function Header() {
@@ -36,7 +38,7 @@ export function Header() {
               mira
             </span>
             <span className="ml-1 hidden rounded-full border border-ink/10 bg-white/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/55 backdrop-blur-sm sm:inline-flex">
-              v0.3.9
+              v0.4.0
             </span>
           </a>
 
