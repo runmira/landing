@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight, Tag } from 'lucide-react';
+import { ArrowRight, Tag } from 'lucide-react';
 import { getReleases, type Release } from '@/lib/releases';
 import { Footer } from '@/components/Footer';
 
@@ -107,9 +107,11 @@ export default async function ReleasesPage() {
   );
 }
 
+const MAX_FEATURES = 6;
+
 function ReleaseCard({ release, isLatest }: { release: Release; isLatest: boolean }) {
-  const MAX_TAGS = 5;
-  const overflow = release.features.length - MAX_TAGS;
+  const shown = release.features.slice(0, MAX_FEATURES);
+  const overflow = release.features.length - MAX_FEATURES;
 
   return (
     <div className="flex gap-6">
@@ -127,19 +129,14 @@ function ReleaseCard({ release, isLatest }: { release: Release; isLatest: boolea
         </div>
       </div>
 
-      {/* Card */}
-      <Link
-        href={`/releases/${release.slug}`}
-        className="group flex-1 overflow-hidden rounded-2xl border border-ink/8 bg-white/70 p-6 shadow-sm transition-all hover:border-coral/30 hover:shadow-md hover:shadow-coral/10"
-      >
-        {/* Top row */}
+      {/* Card — div so the button CTA can be a proper <a> inside */}
+      <div className="flex-1 overflow-hidden rounded-2xl border border-ink/8 bg-white/70 p-6 shadow-sm transition-all hover:border-coral/20 hover:shadow-md hover:shadow-coral/8">
+        {/* Version + badges */}
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <span
             className={[
               'inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider',
-              isLatest
-                ? 'bg-coral text-white'
-                : 'bg-ink/6 text-ink/60',
+              isLatest ? 'bg-coral text-white' : 'bg-ink/6 text-ink/60',
             ].join(' ')}
           >
             v{release.version}
@@ -152,42 +149,47 @@ function ReleaseCard({ release, isLatest }: { release: Release; isLatest: boolea
         </div>
 
         {/* Title */}
-        <h2 className="mb-1.5 text-[18px] font-bold leading-snug tracking-[-0.02em] text-ink group-hover:text-coral transition-colors">
+        <h2 className="mb-1.5 text-[18px] font-bold leading-snug tracking-[-0.02em] text-ink">
           {release.title}
         </h2>
 
         {/* Headline */}
         {release.headline && (
-          <p className="mb-4 text-[14px] leading-relaxed text-ink/55 line-clamp-2">
+          <p className="mb-5 text-[14px] leading-relaxed text-ink/50 line-clamp-2">
             {release.headline}
           </p>
         )}
 
-        {/* Feature tags */}
-        {release.features.length > 0 && (
-          <div className="mb-4 flex flex-wrap gap-1.5">
-            {release.features.slice(0, MAX_TAGS).map((f) => (
-              <span
-                key={f}
-                className="rounded-full border border-ink/10 bg-ink/[0.035] px-2.5 py-0.5 text-[11.5px] text-ink/60"
-              >
+        {/* Feature list */}
+        {shown.length > 0 && (
+          <ul className="mb-2 space-y-2">
+            {shown.map((f) => (
+              <li key={f} className="flex items-start gap-2.5 text-[13.5px] text-ink/70">
+                <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-coral/60" />
                 {f}
-              </span>
+              </li>
             ))}
             {overflow > 0 && (
-              <span className="rounded-full border border-ink/10 bg-ink/[0.035] px-2.5 py-0.5 text-[11.5px] text-ink/40">
-                +{overflow} more
-              </span>
+              <li className="flex items-center gap-2.5 text-[13px] text-ink/35">
+                <span className="ml-[3px] font-mono">···</span>
+                {overflow} more in the full changelog
+              </li>
             )}
-          </div>
+          </ul>
         )}
 
-        {/* CTA */}
-        <div className="flex items-center gap-1 text-[12.5px] font-semibold text-coral/70 group-hover:text-coral transition-colors">
-          View changelog
-          <ChevronRight size={13} className="transition-transform group-hover:translate-x-0.5" />
-        </div>
-      </Link>
+        {/* Divider */}
+        <div className="my-5 hairline" />
+
+        {/* CTA button */}
+        <Link
+          href={`/releases/${release.slug}`}
+          className="inline-flex items-center gap-2 rounded-full bg-obsidian px-4 py-2 text-[12.5px] font-semibold text-ghost shadow-sm transition-all hover:shadow-md hover:shadow-coral/20 active:scale-95"
+        >
+          See full changelog
+          <ArrowRight size={13} />
+        </Link>
+      </div>
     </div>
   );
 }
