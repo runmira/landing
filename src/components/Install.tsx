@@ -1,22 +1,5 @@
-import { InstallCommand, SCRIPT_COMMAND } from './InstallCommand';
-
-const VARIANTS = [
-  {
-    label: 'Homebrew',
-    subtitle: 'macOS + Linux',
-    command: 'brew install runmira/tap/mira',
-  },
-  {
-    label: 'Install script',
-    subtitle: 'no Homebrew required',
-    command: SCRIPT_COMMAND,
-  },
-  {
-    label: 'From source',
-    subtitle: 'Rust 1.88+',
-    command: 'cargo install --path mira/crates/mira-cli',
-  },
-];
+import { InstallTabs } from './InstallTabs';
+import { DownloadButton } from './DownloadButton';
 
 export function Install() {
   return (
@@ -49,30 +32,14 @@ export function Install() {
           </p>
         </div>
 
-        <div className="mx-auto mt-12 flex justify-center">
-          <InstallCommand command={SCRIPT_COMMAND} />
+        <div className="mt-12">
+          <InstallTabs />
         </div>
 
-        <div className="mt-16 grid gap-3 sm:grid-cols-3">
-          {VARIANTS.map((v) => (
-            <div
-              key={v.label}
-              className="rounded-3xl border border-ink/10 bg-white/60 p-6 backdrop-blur-sm transition hover:border-ink/25 hover:bg-white/80"
-            >
-              <div className="flex items-baseline justify-between">
-                <span className="text-sm font-semibold text-ink">
-                  {v.label}
-                </span>
-                <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-ink/45">
-                  {v.subtitle}
-                </span>
-              </div>
-              <div className="mt-4 overflow-x-auto rounded-2xl bg-obsidian/95 p-4 font-mono text-xs leading-relaxed text-ghost">
-                <span className="font-bold text-coral">$ </span>
-                {v.command}
-              </div>
-            </div>
-          ))}
+        {/* The app, for people who'd rather not use a terminal to install. */}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-ink/55">
+          <span>Prefer an app?</span>
+          <DownloadButton variant="link" />
         </div>
 
         {/* Coda — closes the loop: install then run. Kept intentionally

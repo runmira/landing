@@ -13,12 +13,23 @@ export function DownloadButton({
   center = false,
   onDark = false,
 }: {
-  variant?: 'hero' | 'compact';
+  variant?: 'hero' | 'compact' | 'link';
   /** Centre the button and its requirements line (section CTAs). */
   center?: boolean;
   /** On a dark surface: lighter requirements text. */
   onDark?: boolean;
 }) {
+  if (variant === 'link') {
+    return (
+      <a
+        href={DESKTOP_DOWNLOAD_URL}
+        className="inline-flex items-center gap-1.5 font-semibold text-coral underline-offset-4 hover:underline"
+      >
+        <ArrowDownToLine className="h-3.5 w-3.5" strokeWidth={2.5} aria-hidden />
+        Download Mira for Mac{DESKTOP_CHANNEL !== 'stable' ? ` (${DESKTOP_CHANNEL})` : ''}
+      </a>
+    );
+  }
   if (variant === 'compact') {
     return (
       <a
