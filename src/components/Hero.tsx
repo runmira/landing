@@ -32,8 +32,9 @@ export function Hero() {
           {/* Description */}
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink/65 sm:text-xl">
             Mira reads your code, edits files, runs commands, and reviews diffs
-            — from a terminal. Bring your own model. Sessions live as plain
-            files on disk. No hosted control plane, no vector DB, no telemetry.
+            — in a native Mac app or your terminal. Bring your own model, or
+            the Claude Code and Codex you already use. Sessions live as plain
+            files on disk. No hosted control plane, no telemetry.
           </p>
 
           {/* CTAs — capsule buttons. Top-aligned: the download carries its

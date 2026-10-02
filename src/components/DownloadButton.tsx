@@ -7,7 +7,17 @@ import { DESKTOP_DOWNLOAD_URL, DESKTOP_REQUIREMENTS } from '@/lib/download';
  * `hero` is the coral capsule beside the install command, with the
  * requirements underneath; `compact` is the header's small pill.
  */
-export function DownloadButton({ variant = 'hero' }: { variant?: 'hero' | 'compact' }) {
+export function DownloadButton({
+  variant = 'hero',
+  center = false,
+  onDark = false,
+}: {
+  variant?: 'hero' | 'compact';
+  /** Centre the button and its requirements line (section CTAs). */
+  center?: boolean;
+  /** On a dark surface: lighter requirements text. */
+  onDark?: boolean;
+}) {
   if (variant === 'compact') {
     return (
       <a
@@ -20,7 +30,7 @@ export function DownloadButton({ variant = 'hero' }: { variant?: 'hero' | 'compa
     );
   }
   return (
-    <div className="flex flex-col items-start gap-1.5">
+    <div className={`flex flex-col gap-1.5 ${center ? 'items-center' : 'items-start'}`}>
       <a
         href={DESKTOP_DOWNLOAD_URL}
         className="group inline-flex items-center gap-2.5 rounded-full bg-coral py-3.5 pl-5 pr-6 text-sm font-semibold text-white shadow-lg shadow-coral/30 transition-all duration-200 hover:bg-coral/90 hover:shadow-xl hover:shadow-coral/40 active:scale-95"
@@ -30,7 +40,9 @@ export function DownloadButton({ variant = 'hero' }: { variant?: 'hero' | 'compa
         </span>
         Download for Mac
       </a>
-      <span className="pl-5 text-[11px] font-medium text-ink/40">{DESKTOP_REQUIREMENTS}</span>
+      <span className={`text-[11px] font-medium ${center ? '' : 'pl-5'} ${onDark ? 'text-ghost/45' : 'text-ink/40'}`}>
+        {DESKTOP_REQUIREMENTS}
+      </span>
     </div>
   );
 }

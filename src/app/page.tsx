@@ -1,5 +1,6 @@
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
+import { DesktopApp } from '@/components/DesktopApp';
 import { TerminalDemo } from '@/components/TerminalDemo';
 import { Features } from '@/components/Features';
 import { Providers } from '@/components/Providers';
@@ -11,6 +12,7 @@ export default function Page() {
     <main className="min-h-screen bg-cream font-body text-ink">
       <Header />
       <Hero />
+      <DesktopApp />
       <TerminalDemo />
 
       {/* Bridge — a pull-quote strip that carries the eye from the

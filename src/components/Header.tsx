@@ -4,6 +4,7 @@ import { DownloadButton } from './DownloadButton';
 
 
 const NAV_ITEMS = [
+  { label: 'Mac app', href: '#desktop' },
   { label: 'Manifesto', href: '#manifesto' },
   { label: 'Terminal', href: '#terminal' },
   { label: 'Providers', href: '#providers' },
