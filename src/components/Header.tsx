@@ -1,15 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { BookOpen, ChevronDown, Tag, TerminalSquare } from 'lucide-react';
 import { DownloadButton } from './DownloadButton';
 
-
+// `/#…`, not `#…`: the header is on /releases and /docs too.
 const NAV_ITEMS = [
-  { label: 'Mac app', href: '#desktop' },
-  { label: 'Manifesto', href: '#manifesto' },
-  { label: 'Terminal', href: '#terminal' },
-  { label: 'Providers', href: '#providers' },
-  { label: 'Install', href: '#install' },
-  { label: 'Releases', href: '/releases', external: false },
+  { label: 'Mac app', href: '/#desktop' },
+  { label: 'Manifesto', href: '/#manifesto' },
+  { label: 'Terminal', href: '/#terminal' },
+  { label: 'Providers', href: '/#providers' },
+];
+
+/** Everything for getting and using Mira, under one menu. */
+const GET_STARTED = [
+  { label: 'Install', note: 'Homebrew, the install script or the Mac app', href: '/#install', Icon: TerminalSquare },
+  { label: 'Releases', note: 'What shipped in every version', href: '/releases', Icon: Tag },
+  { label: 'Docs', note: 'Guides, configuration and reference', href: '/docs', Icon: BookOpen },
 ];
 
 export function Header() {
@@ -56,13 +62,40 @@ export function Header() {
                 <span className="absolute -bottom-1 left-0 h-px w-0 bg-coral transition-all duration-200 group-hover:w-full" />
               </a>
             ))}
-            <Link
-              href="/docs"
-              className="group relative text-[13px] font-medium text-ink/60 transition-colors hover:text-ink"
-            >
-              Docs
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-coral transition-all duration-200 group-hover:w-full" />
-            </Link>
+            {/* Get started: opens on hover and on keyboard focus, no script. */}
+            <div className="group/menu relative">
+              <button
+                type="button"
+                aria-haspopup="true"
+                className="flex items-center gap-1 text-[13px] font-medium text-ink/60 transition-colors hover:text-ink group-focus-within/menu:text-ink"
+              >
+                Get started
+                <ChevronDown
+                  className="h-3.5 w-3.5 transition-transform duration-200 group-hover/menu:rotate-180 group-focus-within/menu:rotate-180"
+                  aria-hidden
+                />
+              </button>
+              {/* pt-3 bridges the gap so the pointer can travel into the panel. */}
+              <div className="invisible absolute left-1/2 top-full z-50 w-80 -translate-x-1/2 pt-3 opacity-0 transition-all duration-150 group-hover/menu:visible group-hover/menu:opacity-100 group-focus-within/menu:visible group-focus-within/menu:opacity-100">
+                <div className="rounded-2xl border border-ink/10 bg-white/95 p-2 shadow-xl shadow-ink/10 backdrop-blur-xl">
+                  {GET_STARTED.map(({ label, note, href, Icon }) => (
+                    <Link
+                      key={label}
+                      href={href}
+                      className="flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-cream focus:bg-cream focus:outline-none"
+                    >
+                      <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-coral/12 text-coral">
+                        <Icon className="h-4 w-4" aria-hidden />
+                      </span>
+                      <span>
+                        <span className="block text-[13px] font-semibold text-ink">{label}</span>
+                        <span className="block text-[12px] leading-snug text-ink/55">{note}</span>
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
           </nav>
 
           {/* Right cluster — same obsidian capsule vocabulary as InstallCommand */}
