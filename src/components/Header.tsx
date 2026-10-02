@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { DownloadButton } from './DownloadButton';
 
 
 const NAV_ITEMS = [
@@ -65,6 +66,7 @@ export function Header() {
 
           {/* Right cluster — same obsidian capsule vocabulary as InstallCommand */}
           <div className="flex items-center gap-2">
+            <DownloadButton variant="compact" />
             <a
               href="https://github.com/runmira/mira"
               target="_blank"

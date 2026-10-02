@@ -1,3 +1,4 @@
+import { DownloadButton } from "./DownloadButton";
 import { InstallCommand } from "./InstallCommand";
 
 export function Hero() {
@@ -35,9 +36,11 @@ export function Hero() {
             files on disk. No hosted control plane, no vector DB, no telemetry.
           </p>
 
-          {/* CTAs — capsule buttons */}
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-         <InstallCommand />
+          {/* CTAs — capsule buttons. Top-aligned: the download carries its
+              requirements on a line underneath. */}
+          <div className="mt-10 flex flex-wrap items-start gap-3">
+            <DownloadButton />
+            <InstallCommand />
             <a
               href="https://github.com/runmira/mira"
               target="_blank"
