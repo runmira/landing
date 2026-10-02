@@ -1,8 +1,9 @@
 import { ArrowDownToLine } from 'lucide-react';
-import { DESKTOP_DOWNLOAD_URL, DESKTOP_REQUIREMENTS } from '@/lib/download';
+import { DESKTOP_CHANNEL, DESKTOP_DOWNLOAD_URL, DESKTOP_REQUIREMENTS } from '@/lib/download';
 
 /**
- * "Download for Mac": the desktop app's signed, notarized disk image.
+ * "Download for Mac": the desktop app's signed, notarized disk image, from
+ * the channel the site offers (see lib/download.ts).
  *
  * `hero` is the coral capsule beside the install command, with the
  * requirements underneath; `compact` is the header's small pill.
@@ -39,6 +40,11 @@ export function DownloadButton({
           <ArrowDownToLine className="h-3.5 w-3.5" strokeWidth={2.75} aria-hidden />
         </span>
         Download for Mac
+        {DESKTOP_CHANNEL !== 'stable' && (
+          <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.14em]">
+            {DESKTOP_CHANNEL}
+          </span>
+        )}
       </a>
       <span className={`text-[11px] font-medium ${center ? '' : 'pl-5'} ${onDark ? 'text-ghost/45' : 'text-ink/40'}`}>
         {DESKTOP_REQUIREMENTS}

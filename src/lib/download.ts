@@ -1,9 +1,21 @@
 /**
- * The Mira desktop app's download. The desktop release workflow keeps the
- * latest stable build at this fixed name in the `desktop-updates` release,
- * so the link never needs a version bump.
+ * The Mira desktop app's download. The desktop release workflow keeps each
+ * channel's latest build at a fixed name in runmira/mira's
+ * `desktop-updates` release (Mira-arm64.dmg, Mira-beta-arm64.dmg,
+ * Mira-alpha-arm64.dmg), so links never need a version bump.
+ *
+ * The site offers the alpha for now: Mira itself is in alpha. Switch
+ * DESKTOP_CHANNEL to 'stable' when the app leaves it.
  */
-export const DESKTOP_DOWNLOAD_URL =
-  'https://github.com/runmira/mira/releases/download/desktop-updates/Mira-arm64.dmg';
+export type DesktopChannel = 'alpha' | 'beta' | 'stable';
+export const DESKTOP_CHANNEL = 'alpha' as DesktopChannel;
 
-export const DESKTOP_REQUIREMENTS = 'macOS 11+ · Apple silicon';
+const FEED = 'https://github.com/runmira/mira/releases/download/desktop-updates';
+
+export const DESKTOP_DOWNLOAD_URL =
+  DESKTOP_CHANNEL === 'stable' ? `${FEED}/Mira-arm64.dmg` : `${FEED}/Mira-${DESKTOP_CHANNEL}-arm64.dmg`;
+
+export const DESKTOP_REQUIREMENTS =
+  DESKTOP_CHANNEL === 'stable'
+    ? 'macOS 11+ · Apple silicon'
+    : `${DESKTOP_CHANNEL === 'alpha' ? 'Alpha' : 'Beta'} · macOS 11+ · Apple silicon · updates itself`;
