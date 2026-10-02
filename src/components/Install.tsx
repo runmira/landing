@@ -10,7 +10,7 @@ const VARIANTS = [
     label: 'Install script',
     subtitle: 'no Homebrew required',
     command:
-      'curl -fsSL https://raw.githubusercontent.com/runmira/mira/main/install.sh | bash',
+      'curl -fsSL https://runmira.dev/install.sh | bash',
   },
   {
     label: 'From source',

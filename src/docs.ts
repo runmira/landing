@@ -66,13 +66,13 @@ brew install runmira/tap/mira
 No Homebrew required. The script detects your OS and architecture, downloads the right binary from the latest GitHub release, and places it in \`/usr/local/bin\` (falling back to \`~/.local/bin\` when the system directory isn't writable).
 
 \`\`\`bash
-curl -fsSL https://raw.githubusercontent.com/runmira/mira/main/install.sh | bash
+curl -fsSL https://runmira.dev/install.sh | bash
 \`\`\`
 
 To pin a specific release, set \`MIRA_VERSION\` first:
 
 \`\`\`bash
-MIRA_VERSION=v0.4.2 curl -fsSL https://raw.githubusercontent.com/runmira/mira/main/install.sh | bash
+curl -fsSL https://runmira.dev/install.sh | MIRA_VERSION=v0.4.2 bash
 \`\`\`
 
 ## From source
