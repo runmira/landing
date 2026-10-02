@@ -1,4 +1,4 @@
-import { InstallCommand } from './InstallCommand';
+import { InstallCommand, SCRIPT_COMMAND } from './InstallCommand';
 
 const VARIANTS = [
   {
@@ -9,8 +9,7 @@ const VARIANTS = [
   {
     label: 'Install script',
     subtitle: 'no Homebrew required',
-    command:
-      'curl -fsSL https://runmira.dev/install.sh | bash',
+    command: SCRIPT_COMMAND,
   },
   {
     label: 'From source',
@@ -51,7 +50,7 @@ export function Install() {
         </div>
 
         <div className="mx-auto mt-12 flex justify-center">
-          <InstallCommand />
+          <InstallCommand command={SCRIPT_COMMAND} />
         </div>
 
         <div className="mt-16 grid gap-3 sm:grid-cols-3">
