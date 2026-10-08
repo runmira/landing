@@ -4,7 +4,7 @@ import { getReleases } from "@/lib/releases";
 
 /** Shown when no release notes can be read. scripts/release.sh in the mira
  *  repo rewrites this (the file's only vX.Y.Z) on every CLI release. */
-const FALLBACK_VERSION = "v0.4.0";
+const FALLBACK_VERSION = "v0.6.1";
 
 export async function Hero() {
   // The newest release notes, alphas and betas included, so the pill
