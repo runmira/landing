@@ -1,7 +1,18 @@
 import { DownloadButton } from "./DownloadButton";
 import { InstallCommand } from "./InstallCommand";
+import { getReleases } from "@/lib/releases";
 
-export function Hero() {
+/** Shown when no release notes can be read. scripts/release.sh in the mira
+ *  repo rewrites this (the file's only vX.Y.Z) on every CLI release. */
+const FALLBACK_VERSION = "v0.4.0";
+
+export async function Hero() {
+  // The newest release notes, alphas and betas included, so the pill
+  // follows what actually shipped instead of a hand-edited number.
+  const latest = (await getReleases().catch(() => []))[0];
+  const pill = latest
+    ? `${latest.slug} — ${latest.channel === "stable" ? "out now" : latest.channel}, in the open`
+    : `${FALLBACK_VERSION} — alpha, in the open`;
   return (
     <section className="relative overflow-hidden bg-cream">
       {/* Warm ambient gradient */}
@@ -19,7 +30,7 @@ export function Hero() {
           {/* Status pill — capsule */}
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/60 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink/60 backdrop-blur-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-coral" />
-            v0.4.0 — alpha, in the open
+            {pill}
           </div>
 
           {/* Headline */}

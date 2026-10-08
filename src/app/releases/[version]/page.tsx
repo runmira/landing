@@ -111,13 +111,18 @@ export default async function ReleasePage({ params }: { params: Promise<{ versio
               <span className="inline-flex items-center rounded-full bg-obsidian px-3 py-1 font-mono text-[13px] font-bold tracking-wider text-ghost">
                 v{release.version}
               </span>
+              {release.channel !== 'stable' && (
+                <span className="rounded-full border border-ink/12 bg-ink/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-ink/55">
+                  {release.channel === 'alpha' ? 'Alpha' : 'Beta'}
+                </span>
+              )}
               {isLatest && (
                 <span className="rounded-full border border-coral/25 bg-coral/8 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.14em] text-coral">
                   Latest
                 </span>
               )}
               <a
-                href={`https://github.com/runmira/mira/releases/tag/v${release.version}`}
+                href={`https://github.com/runmira/mira/releases/tag/${release.tag}`}
                 target="_blank"
                 rel="noreferrer"
                 className="ml-auto text-[12px] font-medium text-ink/40 transition-colors hover:text-ink"

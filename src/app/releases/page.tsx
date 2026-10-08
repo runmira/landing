@@ -141,6 +141,11 @@ function ReleaseCard({ release, isLatest }: { release: Release; isLatest: boolea
           >
             v{release.version}
           </span>
+          {release.channel !== 'stable' && (
+            <span className="rounded-full border border-ink/12 bg-ink/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-ink/55">
+              {release.channel === 'alpha' ? 'Alpha' : 'Beta'}
+            </span>
+          )}
           {isLatest && (
             <span className="rounded-full border border-coral/25 bg-coral/8 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-coral">
               Latest
