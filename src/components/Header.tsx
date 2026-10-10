@@ -45,9 +45,9 @@ export function Header() {
             <span className="font-heading text-[17px] font-semibold tracking-[-0.01em] text-ink">
               mira
             </span>
-            <span className="ml-1 hidden rounded-full border border-ink/10 bg-white/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/55 backdrop-blur-sm sm:inline-flex">
-              v0.6.1
-            </span>
+<span className="ml-1 hidden rounded-full border border-ink/10 bg-white/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/55 backdrop-blur-sm sm:inline-flex">
+                v0.6.2
+              </span>
           </a>
 
           {/* Center nav — editorial, quiet ink type */}
