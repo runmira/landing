@@ -107,22 +107,21 @@ async function fetchFromGitHub(): Promise<Release[]> {
 }
 
 export async function getReleases(): Promise<Release[]> {
-  // Local monorepo: landing/ is a sibling of mira/
-  const localPath = path.resolve(process.cwd(), '..', 'mira', 'releases');
-  try {
-    if (fs.existsSync(localPath)) {
-      const files = fs
-        .readdirSync(localPath)
-        .filter((f) => RELEASE_FILE.test(f))
-        .sort(compareVersionsDesc);
-      if (files.length > 0) {
-        return files.map((f) =>
-          parseRelease(f.replace('.md', ''), fs.readFileSync(path.join(localPath, f), 'utf-8')),
-        );
-      }
-    }
-  } catch { /* fall through */ }
-  return fetchFromGitHub();
+  const readLocal = (directory: string): Release[] => {
+    try {
+      return fs.readdirSync(directory)
+        .filter((file) => RELEASE_FILE.test(file))
+        .map((file) => parseRelease(file.replace('.md', ''), fs.readFileSync(path.join(directory, file), 'utf-8')));
+    } catch { return []; }
+  };
+  // Checked-in notes make new releases available in local and deployed builds.
+  // Keep the existing catalog from the sibling checkout or GitHub.
+  const bundled = readLocal(path.resolve(process.cwd(), 'releases'));
+  const sibling = readLocal(path.resolve(process.cwd(), '..', 'mira', 'releases'));
+  const catalog = sibling.length > 0 ? sibling : await fetchFromGitHub();
+  const bySlug = new Map(catalog.map((release) => [release.slug, release]));
+  for (const release of bundled) bySlug.set(release.slug, release);
+  return [...bySlug.values()].sort((a, b) => compareVersionsDesc(a.slug, b.slug));
 }
 
 export async function getRelease(slug: string): Promise<Release | null> {
