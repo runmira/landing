@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { ArrowDownToLine, BadgeCheck, Globe, History, MessagesSquare, RefreshCw } from 'lucide-react';
 import { DownloadButton } from './DownloadButton';
-import { DESKTOP_CHANNEL } from '@/lib/download';
+import { getDesktopChannel } from '@/lib/desktop-channel';
 
 /**
  * "Mira for Mac": the desktop app, sold with real screenshots of it.
@@ -55,7 +55,8 @@ function Shot({ src, alt, priority = false }: { src: string; alt: string; priori
   );
 }
 
-export function DesktopApp() {
+export async function DesktopApp() {
+  const channel = await getDesktopChannel();
   return (
     <section id="desktop" aria-labelledby="desktop-title" className="relative overflow-hidden bg-cream pb-28 pt-8">
       <div
@@ -132,7 +133,7 @@ export function DesktopApp() {
             <ArrowDownToLine className="h-6 w-6" strokeWidth={2.5} aria-hidden />
           </div>
           <div className="text-balance font-heading text-3xl font-semibold tracking-[-0.02em] text-ghost sm:text-4xl">
-            Get Mira for Mac{DESKTOP_CHANNEL === 'alpha' ? ' — Alpha' : DESKTOP_CHANNEL === 'beta' ? ' — Beta' : ''}
+            Get Mira for Mac{channel === 'alpha' ? ' — Alpha' : channel === 'beta' ? ' — Beta' : ''}
           </div>
           <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-ghost/60">
             <span>36 MB</span>

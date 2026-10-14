@@ -4,7 +4,7 @@ import { getReleases } from "@/lib/releases";
 
 /** Shown when no release notes can be read. scripts/release.sh in the mira
  *  repo rewrites this (the file's only vX.Y.Z) on every CLI release. */
-const FALLBACK_VERSION = "v0.6.1";
+const FALLBACK_VERSION = "v0.6.2-beta.1";
 
 export async function Hero() {
   // The newest release notes, alphas and betas included, so the pill
@@ -12,7 +12,7 @@ export async function Hero() {
   const latest = (await getReleases().catch(() => []))[0];
   const pill = latest
     ? `${latest.slug} — ${latest.channel === "stable" ? "out now" : latest.channel}, in the open`
-    : `${FALLBACK_VERSION} — alpha, in the open`;
+    : `${FALLBACK_VERSION} — beta, in the open`;
   return (
     <section className="relative overflow-hidden bg-cream">
       {/* Warm ambient gradient */}
