@@ -20,7 +20,7 @@ export const sections: DocSection[] = [
         title: 'Introduction',
         content: `# Introduction
 
-**Mira** is an open-source coding agent that runs on your machine with the model you choose. It reads your code, edits files, runs commands, reviews diffs, and delegates subtasks — from a terminal or a browser.
+**Mira** is an open-source coding agent that runs on your machine with the model you choose. It reads your code, edits files, runs commands, reviews diffs, and delegates subtasks — from the Mac desktop app, a browser, a terminal, or your phone.
 
 Sessions and configuration live as plain files on disk. No hosted control plane, no vector database, no telemetry.
 
@@ -34,6 +34,11 @@ Sessions and configuration live as plain files on disk. No hosted control plane,
 
 ## What you can do
 
+- Work in the native Mac desktop app, the browser web UI, or a terminal TUI
+- Drive Claude Code, Codex and OpenCode on your own plan, and switch engines mid-chat without losing the thread
+- Review an agent's changes turn by turn beside the conversation, with a guided walkthrough
+- Track work by pull request or branch, from in progress to ready to merge
+- Check progress and answer approvals from your phone
 - Chat with any codebase from a terminal TUI or the browser web UI
 - Edit files, run shell commands, and search code through the permission layer
 - Delegate research or write subtasks to specialist subagents in parallel
@@ -43,7 +48,7 @@ Sessions and configuration live as plain files on disk. No hosted control plane,
 
 ## Current status
 
-> **Alpha, building in the open.** Chat, tool use, permissions, subagents, code review, memory, plan/undo, MCP, and a web UI are all working. A pull-request panel and worktree-isolated write agents are the latest additions. Expect the surface to keep moving.
+> **Beta, building in the open.** The desktop app ships on Stable, Beta and Alpha channels. Recent additions: external agents, phone access, review beside the conversation, the Work view, and Back/Forward across chats and panels. Expect the surface to keep moving.
 `,
       },
       {
@@ -51,7 +56,17 @@ Sessions and configuration live as plain files on disk. No hosted control plane,
         title: 'Installation',
         content: `# Installation
 
-Mira ships as a single self-contained binary. Pick the method that fits your setup.
+Mira comes as a Mac desktop app and as a single self-contained binary for the terminal and web UI. Pick the method that fits your setup.
+
+## Desktop app (macOS)
+
+Download the app for Apple Silicon Macs. It's signed, notarized and updates itself:
+
+- [Mira](https://github.com/runmira/mira/releases/download/desktop-updates/Mira-arm64.dmg) (stable)
+- [Mira Beta](https://github.com/runmira/mira/releases/download/desktop-updates/Mira-beta-arm64.dmg)
+- [Mira Alpha](https://github.com/runmira/mira/releases/download/desktop-updates/Mira-alpha-arm64.dmg)
+
+See **Desktop App** for the first run, channels and updates.
 
 ## Homebrew
 
@@ -167,7 +182,7 @@ The web UI gives you subagent panels, diff previews, a PR panel, and a plugin ma
 mira serve --open
 \`\`\`
 
-\`--open\` launches your default browser automatically. The server binds to \`localhost:3000\`.
+\`--open\` launches your default browser automatically. The server binds to \`localhost:8787\`.
 
 ## First things to try
 
@@ -193,6 +208,368 @@ mira serve --open
 mira auth status          # list signed-in providers
 mira logout openrouter    # forget a provider's credentials
 \`\`\`
+`,
+      },
+    ],
+  },
+  {
+    id: 'desktop',
+    title: 'Desktop App',
+    pages: [
+      {
+        id: 'desktop-app',
+        title: 'The Desktop App',
+        content: `# The Desktop App
+
+Mira's desktop app is the full Mira experience in a native Mac window: chats, external agents, review, panels and settings, with the agent server running for you in the background. It's built on the same core as \`mira serve\`, so anything you can do in the browser you can do here.
+
+## Download
+
+The app is signed and notarized for Apple Silicon Macs. Pick a channel:
+
+| Channel | App | Download |
+|---------|-----|----------|
+| Stable | Mira | [Mira-arm64.dmg](https://github.com/runmira/mira/releases/download/desktop-updates/Mira-arm64.dmg) |
+| Beta | Mira Beta | [Mira-beta-arm64.dmg](https://github.com/runmira/mira/releases/download/desktop-updates/Mira-beta-arm64.dmg) |
+| Alpha | Mira Alpha | [Mira-alpha-arm64.dmg](https://github.com/runmira/mira/releases/download/desktop-updates/Mira-alpha-arm64.dmg) |
+
+Each channel installs as its own app, so you can keep Stable and try Beta side by side.
+
+## First run
+
+Onboarding walks you through setup step by step:
+
+1. **Choose how Mira thinks.** Connect a provider with your own key, or use an agent you already have, such as Claude Code, Codex or OpenCode.
+2. **Bring your chats.** Import your Claude Code and Codex history by project. The next message you send continues the original session.
+3. **Open a folder** and start a chat.
+
+## Updates
+
+The app checks for updates on its channel and installs them in place. The update popup shows what changed, and it can also offer Alpha and Beta builds, with their notes, before you switch channels.
+
+## The window
+
+**Toolbar.** The sidebar toggle and the **Back** and **Forward** arrows sit beside the traffic lights in every view. Hide the sidebar and the chat curves around them.
+
+**Back and Forward.** The arrows (or **⌘[** and **⌘]**) step through the chats you've opened and the panels you've opened or closed: the right panel and its tabs, the terminal and the review. Each step is one entry, so Back walks you through them in order until there's nothing left.
+
+**Sidebar.** The **Chat / Work** switch at the top picks what the sidebar lists.
+
+- **Chat** lists each chat once, in its project. **Recents** at the top shows the chats you touched last across every project, with the project named on each.
+- **Search and filters** narrow the list. **Working** and **Needs you** show counts, and a badge marks any chat waiting on an approval or an answer.
+- **Settled** collects chats whose work is done: their PR merged or closed, or you put them away. Writing to one brings it back.
+- **Archived** keeps chats you've archived, with Restore and Delete.
+- **Work** groups chats by what they deliver. See the Work page in this section.
+
+New thread, Search, Pull request and Plugins sit at the top of the Chat list.
+
+## Settings
+
+Open Settings with **⌘,**. Each section has its own page:
+
+| Section | What's there |
+|---------|-------------|
+| Provider | Providers, keys and agent sign-ins |
+| General | App-wide preferences |
+| Appearance | Light and dark themes, accent colour, interface size, diff options |
+| Memory, Skills, Agents, Subagents | What the agent knows and can do |
+| Computer | Computer use and paired computers |
+| Devices | Phones and other devices paired to this Mac |
+| Keyboard shortcuts | Every shortcut, rebindable |
+| Hooks, Integrations, Usage | Automation, GitHub and spend |
+`,
+      },
+      {
+        id: 'external-agents',
+        title: 'External Agents',
+        content: `# External Agents
+
+Mira can drive the coding agents you already pay for. Claude Code, Codex, OpenCode and other ACP agents run on your own plan, listed next to Mira's own providers, and you choose one per chat.
+
+## Picking an engine
+
+The model picker lists only what you can use: enabled providers and installed, signed-in agents, in alphabetical sections. Recent picks come first, and "Default model" names the model you'll actually get. New chats remember the last agent you picked and its model.
+
+## Signing in
+
+- **Codex** signs in and switches accounts inside the app.
+- **OpenCode** signs in from Settings, in a built-in terminal.
+- A chat whose model needs a sign-in says so and links straight to it.
+
+You can add a second key or agent account under \`engines:\` in \`mira.yaml\`, and changes apply without restarting.
+
+## Bring your chats
+
+Import Claude Code and Codex history by project during onboarding or later. An imported chat continues the original session: the next message you send picks up where it left off.
+
+## Switch engines mid-chat
+
+Move a chat to another engine, for example from Claude Code to Codex. The new engine gets the chat's messages, commands, edits and plans, sized to fit its context window, and can read anything that didn't fit. The transcript marks the handoff with both engines. Mira asks before switching.
+
+## Every agent gets Mira's tools
+
+External agents work through Mira's tools as well as their own. They can:
+
+- drive Mira's browser, the same one shown in the browser pane
+- check a page at phone, tablet and desktop sizes
+- run background processes that appear in the Processes window
+- launch parallel threads in their own git worktrees
+- ask you privately for an API key
+- show a chart or page right in the chat
+- hand a task to another engine for a second opinion
+
+## Plans, questions and approvals
+
+Agents' questions, plan prompts and approvals show up as Mira's own cards. Codex's **Plan only** mode uses its native plan mode, and approving the plan card starts the build.
+
+## Subagents
+
+When Codex, Claude Code or OpenCode spawn child agents, their activity appears in Mira's agent cards and panels. Each child's replies, reasoning and tools stay separate when the agent exposes them.
+
+## Forking and compaction
+
+Fork a Codex, Claude Code or OpenCode chat into a separate chat that keeps its project, engine and model. Codex can fork from any completed turn. Compactions that Codex and Claude Code run on their own appear in the transcript, and the context ring shows where each agent will compact.
+`,
+      },
+      {
+        id: 'chats',
+        title: 'Working in a Chat',
+        content: `# Working in a Chat
+
+Everything in a chat works the same whichever engine runs it: Mira's own providers or an external agent.
+
+## Queue and steer
+
+You don't have to wait for a turn to finish. Send while one runs and your messages queue up. Edit, reorder or remove queued messages, or **steer** one into the running turn. The queue survives restarts.
+
+**Stop** (⌘⇧X) ends the running turn.
+
+## Mentions and context
+
+| Type | To add |
+|------|--------|
+| \`@\` | A file or folder |
+| \`#\` | An issue or pull request from the chat's repository, shown as a chip that links to GitHub |
+| \`/\` | A slash command |
+
+Attach files and images with ⌘⇧A or by dropping them on the window.
+
+## Ask aside
+
+Ask a quick question about the chat while the agent keeps working (⌘⌥A). It answers from the conversation, plus any \`@files\` you name, without interrupting the turn or adding to the chat.
+
+Select text in a reply to quote it into your message, ask about it aside, or copy it. Clicking a quote jumps back to where it came from.
+
+## Fork from here
+
+Branch any chat at a message into a new chat. Forks sit under the original in the sidebar.
+
+## Checkpoints
+
+Every message snapshots your files. **Restore files** on a message puts them back the way they were before it, and the restore itself can be undone.
+
+## Context and compaction
+
+The context ring in the composer shows how full the context window is. Open the **context inspector** to see what's filling it, drop large tool results, or compact on demand.
+
+Compaction is automatic. Mira measures the request it's about to send against what the provider actually counts and compacts before the window fills, even mid-turn. Recent turns stay whole, OpenAI's and Anthropic's own compaction is used where available, and the next summary is prepared in the background so you aren't kept waiting.
+
+## Usage limits
+
+When a chat hits a provider's usage limit, it shows when the limit resets and picks the task back up then. Turn on automatic resuming in Settings.
+
+## Replies
+
+Replies render PR and issue chips, commit cards, file links that open at the right line, diffs you can apply, callouts and sortable tables. When a request fails, the error says why (a provider limit, a connection problem or a sign-in) and offers a retry or a link to the right setting.
+`,
+      },
+      {
+        id: 'reviewing',
+        title: 'Reviewing Changes',
+        content: `# Reviewing Changes
+
+Review what an agent changed without leaving the conversation.
+
+## The Diff tab
+
+**View changes** (⌘D) opens a Diff tab in the right panel. Keep file tabs beside it, resize the panel, or expand it for a closer look. The uncommitted diff stays current: it refreshes as agents run tools, when you come back to the app, after reconnecting, and on a regular poll.
+
+## Choose the turn
+
+Open the latest turn's changes directly, or use the **Turns** menu to pick an earlier turn with edits. Search turns by prompt, turn number or file path. Each turn's snapshot stays available after the agent commits.
+
+## Walk through a change
+
+**Guided review** orders the change for reading: the core change first, then dependent files, then tests. It explains each stop, lets you ask questions, and tracks which hunks you've approved.
+
+## Comments
+
+Comment on lines in the diff and send your comments to the agent. Drafts are kept until they're sent, including when you switch turns or close the Diff tab. If a send is rejected, the draft stays and an error explains why. If a file changes after you comment on it, the comment moves to a separate editable section with its original quote, so it never attaches to the wrong code.
+
+## Pull requests
+
+The current branch's pull request appears in the sidebar's **Pull request** view and refreshes while agents work. For a full two-stage review from the command line, see Code Review.
+
+## Panel layout
+
+The right panel comes back the way you left it, per account and folder: its width, open file and tool tabs, the active tab and the selected turn. Only paths and a turn number are saved. File contents, prompts, diffs and comments are never stored.
+`,
+      },
+      {
+        id: 'work',
+        title: 'Work',
+        content: `# Work
+
+The **Work** side of the sidebar's Chat / Work switch organises chats by what they deliver rather than by conversation.
+
+## Work items
+
+A work item is a pull request, or a worktree branch before it has one. Every chat on that branch belongs to it. Forks and launched threads that have no branch of their own join their parent's item.
+
+Items are sorted into shelves:
+
+| Shelf | What's in it |
+|-------|-------------|
+| Needs you | A chat waiting on an approval or answer, a chat that needs a retry, failing checks, or requested changes |
+| In progress | An agent is working, or a draft PR or branch nobody is working on yet |
+| In review | An open PR that isn't approved with passing checks yet |
+| Ready to merge | An open PR that's approved, with checks passing |
+| Done | The PR merged or closed, the branch merged, or every chat settled |
+
+## The item page
+
+Open an item to see:
+
+- the goal, taken from the linked issue
+- the chats and agents working on it
+- the combined diff and files
+- the branch and worktree
+- PR checks and reviews, with **Merge** once it's ready
+- recent activity
+
+## Start work
+
+**Start work** picks an issue from the repository, creates an \`issue-N\` worktree branched from the default branch, and opens a chat there named after the issue, with the issue already referenced in the composer.
+`,
+      },
+      {
+        id: 'panels',
+        title: 'Panels & Computer Use',
+        content: `# Panels & Computer Use
+
+The right panel holds tools that sit beside the conversation. Open them from the toolbar or with a shortcut, and switch tabs with **Ctrl+Tab**.
+
+## Panels
+
+| Panel | Shortcut | What it does |
+|-------|----------|-------------|
+| Files | ⌘⇧E | Browse project files and open them in the panel |
+| Processes | ⌘⇧P | Dev servers, ports and logs, with stop and restart |
+| Tests | ⌘⇧T | Run tests, see each failure, and click "Fix this" |
+| Activity | ⌘⇧H | What each message changed, with restore |
+| Device preview | ⌘⇧V | Your app at phone, tablet and laptop sizes |
+| Browser | ⌘⇧B | Mira's own browser, live |
+| Whiteboard | ⌘⌥W | Sketch ideas beside the chat |
+| Terminal | ⌘J | A terminal in the chat's folder |
+
+## Mira's browser
+
+Mira runs its own managed Chromium for the browser tool and the live browser pane. Agents, external ones included, drive the same browser you see in the pane. Browser sessions you aren't using shut down after 15 minutes.
+
+## Computer use
+
+Mira can operate apps on your Mac through computer use. Set it up under **Settings → Computer**:
+
+- **Use this Mac**, or pair another Mira computer with a short-lived link. No tokens or YAML to set up.
+- **Window control** lets you pick one application window for background input, so your own pointer and focus stay yours. A separate Mira cursor shows where the agent is working, when the companion supports it.
+
+Pairing a computer doesn't turn on computer use or approve any action on its own.
+`,
+      },
+      {
+        id: 'phone',
+        title: 'Phone & Remote Access',
+        content: `# Phone & Remote Access
+
+Keep an eye on your agents when you're away from your desk.
+
+## Pair a device
+
+Open **Settings → Devices** and scan the code with your phone, or open it on another computer. From a paired device you can check progress, answer approvals and send follow-ups. Paired devices are listed in Settings → Devices, where you can revoke any of them.
+
+## Reach Mira from anywhere
+
+One switch in **Settings → Devices** gives your computer a private address that works from any network. There's nothing to install or configure, and pairing still decides who gets in.
+
+## Made for small screens
+
+At phone size the sidebar becomes a drawer, panels open full screen, the composer stays above the keyboard, and approvals get large buttons.
+
+## Approvals
+
+Waiting approvals are grouped, with **Approve all** and **Deny all**. **Always allow** lets you edit the exact rule before it's saved. Press **y** or **n** to answer the current approval when you aren't typing.
+
+## Keep the server running
+
+On a machine without the desktop app, run Mira's server as a background service. It starts at login and restarts if it exits (launchd on macOS, systemd on Linux):
+
+\`\`\`bash
+mira service install
+\`\`\`
+`,
+      },
+      {
+        id: 'shortcuts',
+        title: 'Keyboard Shortcuts',
+        content: `# Keyboard Shortcuts
+
+These are the defaults in the desktop app and the web UI. On Windows and Linux, read **⌘** as **Ctrl** and **⌥** as **Alt**. Rebind any of them in **Settings → Keyboard shortcuts** (⌘⌥,).
+
+App shortcuts don't fire while the terminal has focus, so it keeps its own keys.
+
+## Navigation
+
+| Shortcut | Action |
+|----------|--------|
+| ⌘K | Command palette: actions, chats and settings |
+| ⌘[ | Back |
+| ⌘] | Forward |
+| ⌘B | Show or hide the sidebar |
+| ⌘⇧O | New chat |
+| ⌥1 – ⌥9 | Switch to chat 1–9 |
+| ⌘, | Open or leave Settings |
+
+## Chat
+
+| Shortcut | Action |
+|----------|--------|
+| ⌘⇧L | Focus the composer |
+| ⌘⇧A | Attach files |
+| ⌘⇧X | Stop the running turn |
+| ⌘⌥↑ / ⌘⌥↓ | Jump to the first / latest message |
+| ⌘⇧C | Copy the last response |
+| ⌘⇧; | Copy the last code block |
+| y / n | Approve / reject the pending request (when you aren't typing) |
+
+## Panels
+
+| Shortcut | Action |
+|----------|--------|
+| ⌘D | Show or hide the changes review |
+| ⌘J or Ctrl+\` | Show or hide the terminal |
+| ⌘⇧E | Files |
+| ⌘⇧P | Processes |
+| ⌘⇧T | Tests |
+| ⌘⇧H | Activity |
+| ⌘⇧V | Device preview |
+| ⌘⇧B | Browser |
+| ⌘⌥W | Whiteboard |
+| ⌘⌥A | Ask aside |
+| ⌘⌥I | Developer tools |
+| Ctrl+Tab / Ctrl+⇧Tab | Next / previous panel tab |
+| ⌘⌥1 – ⌘⌥9 | Switch to panel tab 1–9 |
+| ⌘⌥⌫ | Close the current panel tab |
+| ⌘⇧\\\\ | Close the right panel |
 `,
       },
     ],
@@ -561,7 +938,7 @@ mira review HEAD~3..HEAD
 mira review --pr 142
 \`\`\`
 
-**Web UI:** click the review icon in the composer toolbar or type \`/review\` in the chat. A side panel streams findings in real time.
+**Web UI and desktop app:** type \`/review\` in the chat, and a side panel streams findings in real time. To read an agent's changes yourself, turn by turn, see **Reviewing Changes**.
 
 ## What it can review
 
@@ -725,17 +1102,17 @@ Toggle modes with \`/mode <name>\` or **Shift+Tab** to rotate through them.
         title: 'Web UI',
         content: `# Web UI
 
-The web UI is a browser-based interface that adds panels, visual diffs, a plugin manager, and a PR viewer on top of the same agent core as the TUI.
+The web UI is a browser-based interface that adds panels, visual diffs, a plugin manager, and a PR viewer on top of the same agent core as the TUI. It's the same interface as the desktop app, so the **Desktop App** pages apply here too.
 
 ## Starting the server
 
 \`\`\`bash
 mira serve
 mira serve --open        # auto-open browser
-mira serve --port 8080   # custom port
+mira serve --port 8080   # custom port (default 8787)
 \`\`\`
 
-The server binds to \`localhost:3000\` by default. It stays running until you kill it — you can open multiple browser tabs, each with its own session.
+The server binds to \`localhost:8787\` by default. It stays running until you kill it — you can open multiple browser tabs, each with its own session.
 
 ## Panels
 
@@ -783,8 +1160,10 @@ The web composer has the same slash-command and \`@\`-mention support as the TUI
 | **Shift+Enter** | Insert newline in composer |
 | **/** | Start a slash command |
 | **@ + text** | Open file picker |
-| **Esc** | Interrupt running turn |
-| **Ctrl+K** | Focus composer from anywhere |
+| **Ctrl+K** | Command palette |
+| **Ctrl+Shift+X** | Stop the running turn |
+
+See **Keyboard Shortcuts** for the full list, all rebindable in Settings.
 
 ## Connecting remotely
 
@@ -795,10 +1174,10 @@ To access the web UI from another machine over SSH:
 mira serve --host 0.0.0.0
 
 # Local port-forward
-ssh -L 3000:localhost:3000 yourserver
+ssh -L 8787:localhost:8787 yourserver
 \`\`\`
 
-Then open \`http://localhost:3000\` on your local machine.
+Then open \`http://localhost:8787\` on your local machine.
 `,
       },
       {
@@ -1188,15 +1567,44 @@ mira --mode auto --model google/gemini-2.5-flash
 mira --resume abc123
 \`\`\`
 
+## mira -p
+
+Run one task without a UI and exit. Piped input is added as context. Tools that would ask you are denied; widen with \`--mode\` or \`--allow\`.
+
+\`\`\`bash
+mira -p "fix the failing test"
+cat build.log | mira -p "why did this fail?"
+mira -p "list the TODOs" --output-format json   # text, json or stream-json
+\`\`\`
+
 ## mira serve
 
-Start the web UI server.
+Start the web UI server (port 8787 by default).
 
 \`\`\`bash
 mira serve
 mira serve --open          # open browser automatically
 mira serve --port 8080
 mira serve --host 0.0.0.0  # listen on all interfaces
+\`\`\`
+
+## mira service
+
+Keep \`mira serve\` running in the background. It starts at login and restarts if it exits (launchd on macOS, systemd on Linux).
+
+\`\`\`bash
+mira service install     # install and start
+mira service status      # installed, running and answering?
+mira service restart
+mira service uninstall
+\`\`\`
+
+## mira update
+
+Update the binary to the latest release. The download is checksum-verified.
+
+\`\`\`bash
+mira update
 \`\`\`
 
 ## mira login / logout
